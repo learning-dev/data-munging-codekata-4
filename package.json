@@ -1,0 +1,17 @@
+{
+  "name": "data_munging",
+  "version": "1.0.0",
+  "description": "data munging using solid principles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ayaz",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "fs": "0.0.1-security"
+  }
+}
