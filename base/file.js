@@ -47,24 +47,25 @@ class File {
     this.elementRow = elementRow;
     this.firstIndex = firstIndex;
     this.secondIndex = secondIndex;
+    this.diffPair = '';
   }
 
   async readInputFileProcess() {
-    let diffPair;
-    await fs.createReadStream(this.filePath)
-      .pipe(csv.parse({ ignoreEmpty: true }))
-      .on('data', (line) => {
-        // console.log(line);
-        if (this.rowCount > 1 && line.length > 0) {
-          this.listOfRows.push(line);
-        }
-        this.rowCount += 1;
-      })
-      .on('end', () => {
-        const filteredLines = parseLines(this.listOfRows);
-        this.diffPair = calculateDifference(filteredLines, this.elementRow, this.firstIndex, this.secondIndex);
-        console.log('diffpair:', this.diffPair);
-      });
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(this.filePath)
+        .pipe(csv.parse({ ignoreEmpty: true }))
+        .on('data', (line) => {
+          if (this.rowCount > 1 && line.length > 0) {
+            this.listOfRows.push(line);
+          }
+          this.rowCount += 1;
+        })
+        .on('end', () => {
+          const filteredLines = parseLines(this.listOfRows);
+          this.diffPair = calculateDifference(filteredLines, this.elementRow, this.firstIndex, this.secondIndex);
+          return resolve(this.diffPair);
+        });
+    });
   }
 }
 
