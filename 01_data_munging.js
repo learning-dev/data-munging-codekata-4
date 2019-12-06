@@ -1,7 +1,6 @@
 const fs = require('fs');
 const csv = require('fast-csv');
 
-
 const listOfRows = [];
 let count = 0;
 const tempSpreads = {};
